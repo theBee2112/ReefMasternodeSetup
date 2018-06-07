@@ -52,6 +52,7 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get update -y
 pkill ./reefd
 killall reefd
 pklil reefd
+sleep 30
 rm -r ~/ReefMasternodeSetup/v1.2ubuntu16
 rm -r .reefcore 
 rm -rf /usr/bin/reef*
