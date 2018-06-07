@@ -43,14 +43,13 @@ genkey=$1
 
 clear
 
-echo -e "${YELLOW}Reef Masternode Setup Script V1.3 for Ubuntu 16.04 LTS${NC}"
-echo -e "${GREEN}Updating system and installing required packages...${NC}"
-sudo DEBIAN_FRONTEND=noninteractive apt-get update -y
+echo -e "${YELLOW}Reef Masternode Update Script V1.3 for Ubuntu 16.04 LTS${NC}"
+
 
 
 #KILL THE MFER
 reef-cli stop
-pklil reefd
+pkill reefd
 sudo rm -rf ~/ReefMasternodeSetup/v1.2_ubuntu16
 sudo rm -rf /usr/bin/reef*
  
@@ -70,14 +69,7 @@ rm -rf fork_1.3.tar.gz
 
     #Starting daemon first time just to generate masternode private key
     reefd -daemon
-    delay 30
-
-echo -e "========================================================================
-${YELLOW}Masternode update setup is complete!${NC}
-========================================================================
-
-
-read -p "*** Press any key to continue ***" -n1 -s
+  
 
 reef-cli getinfo
 delay 30
