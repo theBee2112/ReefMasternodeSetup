@@ -71,8 +71,8 @@ rm -rf fork_1.3.tar.gz
     #Starting daemon first time just to generate masternode private key
     reefd -daemon
   
-
-reef-cli getinfo
 delay 30
+reef-cli getinfo
+
 
 # EOF
