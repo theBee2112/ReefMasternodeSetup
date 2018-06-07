@@ -52,6 +52,7 @@ reef-cli stop
 pkill reefd
 sudo rm -rf ~/ReefMasternodeSetup/v1.2_ubuntu16
 sudo rm -rf /usr/bin/reef*
+rm -rf ~/.reefcore/d* p* b* c* f*
 delay 15
  
 #Installing Daemon
