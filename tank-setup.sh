@@ -1,18 +1,18 @@
 #!/bin/bash
-# Reef Masternode Setup Script V1.4 for Ubuntu 16.04 LTS
-# (c) 2018 by Dwigt007 for Reef Coin
+# Tank Masternode Setup Script V1.4 for Ubuntu 16.04 LTS
+# (c) 2018 by theBee2112, forked from Dwigt007 for Tank Coin
 #
 # Script will attempt to autodetect primary public IP address
 # and generate masternode private key unless specified in command line
 #
 # Usage:
-# bash reef-setup.sh [Masternode_Private_Key]
+# bash tank-setup.sh [Masternode_Private_Key]
 #
 # Example 1: Existing genkey created earlier is supplied
-# bash reef-setup.sh 27dSmwq9CabKjo2L3UD1HvgBP3ygbn8HdNmFiGFoVbN1STcsypy
+# bash tank-setup.sh 27dSmwq9CabKjo2L3UD1HvgBP3ygbn8HdNmFiGFoVbN1STcsypy
 #
 # Example 2: Script will generate a new genkey automatically
-# bash reef-setup.sh
+# bash tank-setup.sh
 #
 
 #Color codes
@@ -21,9 +21,9 @@ GREEN='\033[1;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-#REEF TCP port
-PORT=9857
-RPC=9859
+#TANK TCP port
+PORT=12967
+RPC=16755
 
 #Clear keyboard input buffer
 function clear_stdin { while read -r -t 0; do read -r; done; }
@@ -33,17 +33,17 @@ function delay { echo -e "${GREEN}Sleep for $1 seconds...${NC}"; sleep "$1"; }
 
 #Stop daemon if it's already running
 function stop_daemon {
-    if pgrep -x 'reefd' > /dev/null; then
-        echo -e "${YELLOW}Attempting to stop reefd${NC}"
-        reef-cli stop
+    if pgrep -x 'tankd' > /dev/null; then
+        echo -e "${YELLOW}Attempting to stop tankd${NC}"
+        tank-cli stop
         delay 30
-        if pgrep -x 'reef' > /dev/null; then
-            echo -e "${RED}reefd daemon is still running!${NC} \a"
+        if pgrep -x 'tank' > /dev/null; then
+            echo -e "${RED}tankd daemon is still running!${NC} \a"
             echo -e "${RED}Attempting to kill...${NC}"
-            pkill reefd
+            pkill tankd
             delay 30
-            if pgrep -x 'reefd' > /dev/null; then
-                echo -e "${RED}Can't stop reefd! Reboot and try again...${NC} \a"
+            if pgrep -x 'tankd' > /dev/null; then
+                echo -e "${RED}Can't stop tankd! Reboot and try again...${NC} \a"
                 exit 2
             fi
         fi
@@ -63,10 +63,10 @@ fi
 
 #Process command line parameters
 genkey=$1
-rm -rf .reefcore
+rm -rf .tankcore
 clear
 
-echo -e "${YELLOW}Reef Masternode Setup Script V1.5 for Ubuntu 16.04 LTS${NC}"
+echo -e "${YELLOW}Tank Masternode Setup Script V1.5 for Ubuntu 16.04 LTS${NC}"
 echo "Do you want me to generate a masternode private key for you?[y/n]"
 read DOSETUP
 
@@ -139,7 +139,7 @@ echo -e "${YELLOW}"
 sudo ufw --force enable
 echo -e "${NC}"
 
-#Generating Random Password for reefd JSON RPC
+#Generating Random Password for tankd JSON RPC
 rpcuser=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 rpcpassword=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 
@@ -163,63 +163,63 @@ else
 fi
 
 #KILL THE MFER
-pkill reefd
-rm -r ~/ReefMasternodeSetup/fix*
-rm -r .reefcore 
-rm -rf /usr/bin/reef*
+pkill tankd
+rm -r ~/TankMasternodeSetup/fix*
+rm -r .tankcore 
+rm -rf /usr/bin/tank*
  
 #Installing Daemon
  cd ~
-wget https://github.com/reefcore/ReefCoin/releases/download/1.2.1/reef_1.2.1_linux.tar.gz
-tar -xzf reef_1.2.1_linux.tar.gz -C ~/ReefMasternodeSetup
-rm -rf reef_1.2.1_linux.tar.gz
+wget https://github.com/theBee2112/Tank/releases/download/beta_0.9.1/tank_beta_0.9.1_linux.tar.gz
+tar -xzf tank_beta_0.9.1_linux.tar.gz -C ~/TankMasternodeSetup
+rm -rf tank_beta_0.9.1_linux.tar.gz
 
   stop_daemon
  
  # Deploy binaries to /usr/bin
- sudo cp ~/ReefMasternodeSetup/reef_1.2.1_linux/reef* /usr/bin/
- sudo chmod 755 -R ~/ReefMasternodeSetup
- sudo chmod 755 /usr/bin/reef* 
+ sudo cp ~/TankMasternodeSetup/tank_beta_0.9.1_linux/tank* /usr/bin/
+ sudo chmod 755 -R ~/TankMasternodeSetup
+ sudo chmod 755 /usr/bin/tank* 
  # Deploy masternode monitoring script
- cp ~/ReefMasternodeSetup/reefmon.sh /usr/local/bin
- sudo chmod 711 /usr/local/bin/reefmon.sh
+ cp ~/TankMasternodeSetup/tankmon.sh /usr/local/bin
+ sudo chmod 711 /usr/local/bin/tankmon.sh
  
- #Create reef datadir
- if [ ! -f ~/.reefcore/reef.conf ]; then 
- 	sudo mkdir ~/.reefcore
+ #Create tank datadir
+ if [ ! -f ~/.tankcore/tank.conf ]; then 
+ 	sudo mkdir ~/.tankcore
  fi
 
-echo -e "${YELLOW}Creating reef.conf...${NC}"
+echo -e "${YELLOW}Creating tank.conf...${NC}"
 
 # If genkey was not supplied in command line, we will generate private key on the fly
 if [ -z $genkey ]; then
-    cat <<EOF > ~/.reefcore/reef.conf
+    cat <<EOF > ~/.tankcore/tank.conf
 rpcuser=$rpcuser
 rpcpassword=$rpcpassword
 EOF
 
-    sudo chmod 755 -R ~/.reefcore/reef.conf
+    sudo chmod 755 -R ~/.tankcore/tank.conf
 
     #Starting daemon first time just to generate masternode private key
-    reefd -daemon
+    tankd -daemon
     delay 45
 
     #Generate masternode private key
     echo -e "${YELLOW}Generating masternode private key...${NC}"
-    genkey=$(reef-cli masternode genkey)
+    genkey=$(tank-cli masternode genkey)
     if [ -z "$genkey" ]; then
         echo -e "${RED}ERROR: Can not generate masternode private key.${NC} \a"
         echo -e "${RED}ERROR: Reboot VPS and try again or supply existing genkey as a parameter.${NC}"
         exit 1
     fi
     
-    #Stopping daemon to create reef.conf
+    #Stopping daemon to create tank.conf
     stop_daemon
     delay 30
 fi
 
-# Create reef.conf
-cat <<EOF > ~/.reefcore/reef.conf
+# Create tank.conf
+cat <<EOF > ~/.tankcore/tank.conf
 rpcuser=$rpcuser
 rpcpassword=$rpcpassword
 rpcport=$RPC
@@ -232,20 +232,18 @@ maxconnections=200
 externalip=$publicip:$PORT
 masternode=1
 masternodeprivkey=$genkey
-addnode=107.173.16.11:9857 
-addnode=107.175.28.200:9857
+addnode=208.96.124.185:12967 
+addnode=47.151.3.153:12967
 addnode=seednode.alttank.ca
-addnode=172.245.209.112:9857
-addnode=149.28.142.80:9857
 
 EOF
 
-#Finally, starting reef daemon with new reef.conf
-reefd --daemon
+#Finally, starting tank daemon with new tank.conf
+tankd --daemon
 delay 5
 
-#Setting auto start cron job for reefd
-cronjob="@reboot sleep 30 && reefd"
+#Setting auto start cron job for tankd
+cronjob="@reboot sleep 30 && tankd"
 crontab -l > tempcron
 if ! grep -q "$cronjob" tempcron; then
     echo -e "${GREEN}Configuring crontab job...${NC}"
@@ -260,7 +258,7 @@ ${YELLOW}Masternode setup is complete!${NC}
 Masternode was installed with VPS IP Address: ${YELLOW}$publicip${NC}
 Masternode Private Key: ${YELLOW}$genkey${NC}
 Now you can add the following string to the masternode.conf file
-for your Hot Wallet (the wallet with your REEFCOIN collateral funds):
+for your Hot Wallet (the wallet with your TANKCOIN collateral funds):
 ======================================================================== \a"
 echo -e "${YELLOW}mn1 $publicip:$PORT $genkey TxId TxIdx${NC}"
 echo -e "========================================================================
@@ -298,7 +296,7 @@ Once completed step (2), return to this VPS console and wait for the
 Masternode Status to change to: 'Masternode successfully started'.
 This will indicate that your masternode is fully functional and
 you can celebrate this achievement!
-Currently your masternode is syncing with the REEF network...
+Currently your masternode is syncing with the TANK network...
 The following screen will display in real-time
 the list of peer connections, the status of your masternode,
 node synchronization status and additional network and node stats.
@@ -310,21 +308,21 @@ echo -e "
 ${GREEN}...scroll up to see previous screens...${NC}
 Here are some useful commands and tools for masternode troubleshooting:
 ========================================================================
-To view masternode configuration produced by this script in reef.conf:
-${YELLOW}cat ~/.reefcore/reef.conf${NC}
-Here is your reef.conf generated by this script:
+To view masternode configuration produced by this script in tank.conf:
+${YELLOW}cat ~/.tankcore/tank.conf${NC}
+Here is your tank.conf generated by this script:
 -------------------------------------------------${YELLOW}"
-cat ~/.reefcore/reef.conf
+cat ~/.tankcore/tank.conf
 echo -e "${NC}-------------------------------------------------
-NOTE: To edit reef.conf, first stop the reefd daemon,
-then edit the reef.conf file and save it in nano: (Ctrl-X + Y + Enter),
-then start the reefd daemon back up:
-             to stop:   ${YELLOW}reef-cli stop${NC}
-             to edit:   ${YELLOW}nano ~/.reefcore/reef.conf${NC}
-             to start:  ${YELLOW}reefd${NC}
+NOTE: To edit tank.conf, first stop the tankd daemon,
+then edit the tank.conf file and save it in nano: (Ctrl-X + Y + Enter),
+then start the tankd daemon back up:
+             to stop:   ${YELLOW}tank-cli stop${NC}
+             to edit:   ${YELLOW}nano ~/.tankcore/tank.conf${NC}
+             to start:  ${YELLOW}tankd${NC}
 ========================================================================
 To view Itis debug log showing all MN network activity in realtime:
-             ${YELLOW}tail -f ~/.reefcore/debug.log${NC}
+             ${YELLOW}tail -f ~/.tankcore/debug.log${NC}
 ========================================================================
 To monitor system resource utilization and running processes:
                    ${YELLOW}htop${NC}
@@ -334,15 +332,15 @@ sync status etc. in real-time, run the nodemon.sh script:
                  ${YELLOW}nodemon.sh${NC}
 or just type 'node' and hit <TAB> to autocomplete script name.
 ========================================================================
-Enjoy your REEF Masternode and thanks for using this setup script!
+Enjoy your TANK Masternode and thanks for using this setup script!
 
 If you found this script useful, please donate to : 
-${GREEN}RLrk3XGs7ZYdDSE2Emqhg8hPWvGVcRpjNB${NC}
+${GREEN}ThczW323Y5QN44r5a94NQopSu5S1NnGvR4${NC}
 ...and make sure to check back for updates!
-Author: Dwigt007
+Author: theBee2112, forked from Dwigt007
 "
 delay 30
 # Run nodemon.sh
-reefmon.sh
+tankmon.sh
 
 # EOF
