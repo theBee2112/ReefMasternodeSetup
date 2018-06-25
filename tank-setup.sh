@@ -177,7 +177,7 @@ rm -rf tank_beta_2_donation_fix_linux.tar.gz
   stop_daemon
  
  # Deploy binaries to /usr/bin
- sudo cp ~/TankMasternodeSetup/tank_beta_2_donation_fix_linux/tank* /usr/bin/
+ sudo cp ~/TankMasternodeSetup/tank_beta_2_donation_fix_linux* /usr/bin/
  sudo chmod 755 -R ~/TankMasternodeSetup
  sudo chmod 755 /usr/bin/tank* 
  # Deploy masternode monitoring script
