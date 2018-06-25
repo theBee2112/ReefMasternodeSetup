@@ -170,14 +170,14 @@ rm -rf /usr/bin/tank*
  
 #Installing Daemon
  cd ~
-wget https://github.com/theBee2112/Tank/releases/download/beta_0.9.1/tank_beta_0.9.1_linux.tar.gz
-tar -xzf tank_beta_0.9.1_linux.tar.gz -C ~/TankMasternodeSetup
-rm -rf tank_beta_0.9.1_linux.tar.gz
+wget https://github.com/theBee2112/Tank/releases/download/beta_2_donation_fix/tank_beta_2_donation_fix_linux.tar.gz
+tar -xzf tank_beta_2_donation_fix_linux.tar.gz -C ~/TankMasternodeSetup
+rm -rf tank_beta_2_donation_fix_linux.tar.gz
 
   stop_daemon
  
  # Deploy binaries to /usr/bin
- sudo cp ~/TankMasternodeSetup/tank_beta_0.9.1_linux/tank* /usr/bin/
+ sudo cp ~/TankMasternodeSetup/tank_beta_2_donation_fix_linux/tank* /usr/bin/
  sudo chmod 755 -R ~/TankMasternodeSetup
  sudo chmod 755 /usr/bin/tank* 
  # Deploy masternode monitoring script
