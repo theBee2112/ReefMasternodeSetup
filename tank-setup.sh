@@ -170,7 +170,7 @@ rm -rf /usr/bin/tank*
  
 #Installing Daemon
  cd ~
-wget https://github.com/theBee2112/Tank/releases/download/beta_2_donation_fix/tank_beta_2_donation_fix_linux.tar.gz
+wget https://github.com/theBee2112/Tank/releases/download/untagged-eb82cb1a92c5221cb2a1/tank_beta_2_donation_fix.tar.gz
 tar -xzf tank_beta_2_donation_fix_linux.tar.gz -C ~/TankMasternodeSetup
 rm -rf tank_beta_2_donation_fix_linux.tar.gz
 
