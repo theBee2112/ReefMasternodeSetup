@@ -170,14 +170,14 @@ rm -rf /usr/bin/tank*
  
 #Installing Daemon
  cd ~
-wget https://github.com/theBee2112/Tank/releases/download/untagged-eb82cb1a92c5221cb2a1/tank_beta_2_donation_fix.tar.gz
-tar -xzf tank_beta_2_donation_fix.tar.gz -C ~/TankMasternodeSetup
-rm -rf tank_beta_2_donation_fix.tar.gz
+wget https://github.com/theBee2112/Tank/releases/download/untagged-eb82cb1a92c5221cb2a1/tank_beta_2_donation_reject.tar.gz
+tar -xzf tank_beta_2_donation_reject.tar.gz -C ~/TankMasternodeSetup
+rm -rf tank_beta_2_donation_reject.tar.gz
 
   stop_daemon
  
  # Deploy binaries to /usr/bin
- sudo cp ~/TankMasternodeSetup/tank_beta_2_donation_fix/tank* /usr/bin/
+ sudo cp ~/TankMasternodeSetup/tank_beta_2_donation_reject/tank* /usr/bin/
  sudo chmod 755 -R ~/TankMasternodeSetup
  sudo chmod 755 /usr/bin/tank* 
  # Deploy masternode monitoring script
