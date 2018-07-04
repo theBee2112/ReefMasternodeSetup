@@ -171,13 +171,14 @@ rm -rf /usr/bin/tank*
 #Installing Daemon
  cd ~
 wget https://github.com/theBee2112/Tank/releases/download/beta_3/tank_beta_3_linux.rar
-unrar e tank_beta_3_linux.rar /TankMasternodeSetup
+apt install unrar
+unrar e tank_beta_3_linux.rar -C ~/TankMasternodeSetup/
 rm -rf tank_beta_3_linux.rar
 
   stop_daemon
  
  # Deploy binaries to /usr/bin
- sudo cp ~/TankMasternodeSetup/tank_beta_3_linux/tank* /usr/bin/
+ sudo cp ~/TankMasternodeSetup/tank* /usr/bin/
  sudo chmod 755 -R ~/TankMasternodeSetup
  sudo chmod 755 /usr/bin/tank* 
  # Deploy masternode monitoring script
