@@ -59,7 +59,7 @@ function stop_daemon {
 #   echo -e "${RED}You are not running Ubuntu 14.04 or 16.04 Installation is cancelled.${NC}"
  #  exit 1
 
-fi
+# fi
 
 #Process command line parameters
 genkey=$1
