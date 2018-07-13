@@ -170,10 +170,10 @@ rm -rf /usr/bin/tank*
  
 #Installing Daemon
  cd ~
-wget https://github.com/theBee2112/Tank/releases/download/beta_3/tank_beta_3_linux.rar
+wget https://github.com/theBee2112/Tank/releases/download/beta_4/tank_beta_4_linux.rar
 apt install unrar
-unrar e tank_beta_3_linux.rar -C ~/TankMasternodeSetup/
-rm -rf tank_beta_3_linux.rar
+unrar e tank_beta_4_linux.rar -C ~/TankMasternodeSetup/
+rm -rf tank_beta_4_linux.rar
 
   stop_daemon
  
