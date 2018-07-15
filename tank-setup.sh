@@ -329,9 +329,9 @@ To monitor system resource utilization and running processes:
                    ${YELLOW}htop${NC}
 ========================================================================
 To view the list of peer connections, status of your masternode, 
-sync status etc. in real-time, run the nodemon.sh script:
-                 ${YELLOW}nodemon.sh${NC}
-or just type 'node' and hit <TAB> to autocomplete script name.
+sync status etc. in real-time, run the tankmon.sh script:
+                 ${YELLOW}tankmon.sh${NC}
+or just type 'tank' and hit <TAB> to autocomplete script name.
 ========================================================================
 Enjoy your TANK Masternode and thanks for using this setup script!
 
